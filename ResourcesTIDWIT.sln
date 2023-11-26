@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34221.43
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResourcesTIDWIT", "ResourcesTIDWIT\ResourcesTIDWIT.csproj", "{66FE70EA-E007-4002-8DE3-038BC0F90972}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{66FE70EA-E007-4002-8DE3-038BC0F90972}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66FE70EA-E007-4002-8DE3-038BC0F90972}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66FE70EA-E007-4002-8DE3-038BC0F90972}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66FE70EA-E007-4002-8DE3-038BC0F90972}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {66DCD10B-93E8-4BBA-9B00-0D4B5364AFC7}
+	EndGlobalSection
+EndGlobal
