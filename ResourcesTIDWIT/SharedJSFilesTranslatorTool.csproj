@@ -163,6 +163,12 @@
     <Compile Include="Views\Modules\Configuration.Designer.cs">
       <DependentUpon>Configuration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\Modules\Sorting.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Modules\Sorting.Designer.cs">
+      <DependentUpon>Sorting.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\Modules\Translation.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -187,6 +193,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Modules\Configuration.resx">
       <DependentUpon>Configuration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Modules\Sorting.resx">
+      <DependentUpon>Sorting.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Modules\Translation.resx">
       <DependentUpon>Translation.cs</DependentUpon>

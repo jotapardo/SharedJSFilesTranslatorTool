@@ -53,7 +53,7 @@
 			this.label6.AutoSize = true;
 			this.label6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(58)))), ((int)(((byte)(79)))));
 			this.label6.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-			this.label6.Location = new System.Drawing.Point(32, 468);
+			this.label6.Location = new System.Drawing.Point(12, 468);
 			this.label6.Name = "label6";
 			this.label6.Padding = new System.Windows.Forms.Padding(6);
 			this.label6.Size = new System.Drawing.Size(67, 32);
@@ -136,8 +136,10 @@
 			// 
 			// PathFilesSharedJs
 			// 
+			this.PathFilesSharedJs.Enabled = false;
 			this.PathFilesSharedJs.Location = new System.Drawing.Point(12, 424);
 			this.PathFilesSharedJs.Name = "PathFilesSharedJs";
+			this.PathFilesSharedJs.ReadOnly = true;
 			this.PathFilesSharedJs.Size = new System.Drawing.Size(584, 27);
 			this.PathFilesSharedJs.TabIndex = 59;
 			this.PathFilesSharedJs.Text = "C:\\Development\\TIDWIT60\\C3\\C3.MicroServices\\C3.UI\\C3.UI\\src\\js\\i18n\\lang";
@@ -155,9 +157,9 @@
 			// 
 			// ResultsRichTextBox
 			// 
-			this.ResultsRichTextBox.Location = new System.Drawing.Point(162, 465);
+			this.ResultsRichTextBox.Location = new System.Drawing.Point(85, 468);
 			this.ResultsRichTextBox.Name = "ResultsRichTextBox";
-			this.ResultsRichTextBox.Size = new System.Drawing.Size(325, 104);
+			this.ResultsRichTextBox.Size = new System.Drawing.Size(511, 101);
 			this.ResultsRichTextBox.TabIndex = 57;
 			this.ResultsRichTextBox.Text = "";
 			// 
@@ -278,6 +280,7 @@
 			this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
 			this.Name = "Translation";
 			this.Text = "Translation";
+			this.Load += new System.EventHandler(this.Translation_Load);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 

@@ -67,9 +67,9 @@ namespace ResourcesTIDWIT.Views
 		}
 
 		private Form activeForm = null;
-		private void openChildForm(Form childForm)
+		private void OpenChildForm(Form childForm)
 		{
-			activeForm?.Close();
+			activeForm?.Hide();// Close();
 			activeForm = childForm;
 			childForm.TopLevel = false;
 			childForm.FormBorderStyle = FormBorderStyle.None;
@@ -83,7 +83,17 @@ namespace ResourcesTIDWIT.Views
 
 		private void pictureBoxConfig_Click(object sender, EventArgs e)
 		{
-			openChildForm(new Modules.Configuration());
+			OpenChildForm(new Modules.Configuration());
+		}
+
+		private void pictureBoxTranslation_Click(object sender, EventArgs e)
+		{
+			OpenChildForm(new Translation());
+		}
+
+		private void pictureBoxConfiguration_Click(object sender, EventArgs e)
+		{
+			OpenChildForm(new Sorting());
 		}
 	}
 }

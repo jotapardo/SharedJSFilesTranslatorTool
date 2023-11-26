@@ -16,7 +16,7 @@ namespace ResourcesTIDWIT.Views.Modules
 {
 	public partial class Configuration : Form
 	{
-		private string directoryPath = @"C:\Development\TIDWIT60\C3\C3.MicroServices\C3.UI\C3.UI\src\js\i18n\lang"; // Default path
+		private string directoryPath = @"";
 
 		public Configuration()
 		{
@@ -60,6 +60,12 @@ namespace ResourcesTIDWIT.Views.Modules
 				// Guardar la ruta seleccionada en la configuración
 				ConfigurationManager.WriteSetting("PathFilesSharedJs", directoryPath);
 			}
+		}
+
+		private void Configuration_Load(object sender, EventArgs e)
+		{
+			directoryPath = ConfigurationManager.ReadSetting("PathFilesSharedJs");
+			PathFilesSharedJs.Text = directoryPath;
 		}
 	}
 }

@@ -41,6 +41,7 @@
 			this.pictureBoxConfig = new System.Windows.Forms.PictureBox();
 			this.pictureBoxTranslation = new System.Windows.Forms.PictureBox();
 			this.panelChildForm = new System.Windows.Forms.Panel();
+			this.pictureBox2 = new System.Windows.Forms.PictureBox();
 			this.panel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pboxClose)).BeginInit();
@@ -48,6 +49,8 @@
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxConfiguration)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxConfig)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxTranslation)).BeginInit();
+			this.panelChildForm.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// panel1
@@ -119,7 +122,7 @@
 			// label9
 			// 
 			this.label9.AutoSize = true;
-			this.label9.Location = new System.Drawing.Point(47, 249);
+			this.label9.Location = new System.Drawing.Point(49, 220);
 			this.label9.Name = "label9";
 			this.label9.Size = new System.Drawing.Size(57, 20);
 			this.label9.TabIndex = 55;
@@ -127,18 +130,20 @@
 			// 
 			// pictureBoxConfiguration
 			// 
+			this.pictureBoxConfiguration.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.pictureBoxConfiguration.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxConfiguration.Image")));
-			this.pictureBoxConfiguration.Location = new System.Drawing.Point(50, 196);
+			this.pictureBoxConfiguration.Location = new System.Drawing.Point(53, 167);
 			this.pictureBoxConfiguration.Name = "pictureBoxConfiguration";
 			this.pictureBoxConfiguration.Size = new System.Drawing.Size(50, 50);
 			this.pictureBoxConfiguration.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
 			this.pictureBoxConfiguration.TabIndex = 54;
 			this.pictureBoxConfiguration.TabStop = false;
+			this.pictureBoxConfiguration.Click += new System.EventHandler(this.pictureBoxConfiguration_Click);
 			// 
 			// label8
 			// 
 			this.label8.AutoSize = true;
-			this.label8.Location = new System.Drawing.Point(25, 469);
+			this.label8.Location = new System.Drawing.Point(28, 585);
 			this.label8.Name = "label8";
 			this.label8.Size = new System.Drawing.Size(100, 20);
 			this.label8.TabIndex = 53;
@@ -147,7 +152,7 @@
 			// label7
 			// 
 			this.label7.AutoSize = true;
-			this.label7.Location = new System.Drawing.Point(35, 118);
+			this.label7.Location = new System.Drawing.Point(35, 94);
 			this.label7.Name = "label7";
 			this.label7.Size = new System.Drawing.Size(81, 20);
 			this.label7.TabIndex = 52;
@@ -155,8 +160,9 @@
 			// 
 			// pictureBoxConfig
 			// 
+			this.pictureBoxConfig.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.pictureBoxConfig.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxConfig.Image")));
-			this.pictureBoxConfig.Location = new System.Drawing.Point(50, 416);
+			this.pictureBoxConfig.Location = new System.Drawing.Point(53, 532);
 			this.pictureBoxConfig.Name = "pictureBoxConfig";
 			this.pictureBoxConfig.Size = new System.Drawing.Size(50, 50);
 			this.pictureBoxConfig.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -166,17 +172,20 @@
 			// 
 			// pictureBoxTranslation
 			// 
+			this.pictureBoxTranslation.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.pictureBoxTranslation.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxTranslation.Image")));
-			this.pictureBoxTranslation.Location = new System.Drawing.Point(48, 63);
+			this.pictureBoxTranslation.Location = new System.Drawing.Point(48, 39);
 			this.pictureBoxTranslation.Name = "pictureBoxTranslation";
 			this.pictureBoxTranslation.Size = new System.Drawing.Size(54, 52);
 			this.pictureBoxTranslation.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
 			this.pictureBoxTranslation.TabIndex = 50;
 			this.pictureBoxTranslation.TabStop = false;
+			this.pictureBoxTranslation.Click += new System.EventHandler(this.pictureBoxTranslation_Click);
 			// 
 			// panelChildForm
 			// 
 			this.panelChildForm.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(51)))), ((int)(((byte)(74)))));
+			this.panelChildForm.Controls.Add(this.pictureBox2);
 			this.panelChildForm.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panelChildForm.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.panelChildForm.ForeColor = System.Drawing.Color.White;
@@ -184,6 +193,16 @@
 			this.panelChildForm.Name = "panelChildForm";
 			this.panelChildForm.Size = new System.Drawing.Size(645, 618);
 			this.panelChildForm.TabIndex = 34;
+			// 
+			// pictureBox2
+			// 
+			this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
+			this.pictureBox2.Location = new System.Drawing.Point(220, 220);
+			this.pictureBox2.Name = "pictureBox2";
+			this.pictureBox2.Size = new System.Drawing.Size(203, 204);
+			this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+			this.pictureBox2.TabIndex = 0;
+			this.pictureBox2.TabStop = false;
 			// 
 			// Main
 			// 
@@ -205,6 +224,8 @@
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxConfiguration)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxConfig)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxTranslation)).EndInit();
+			this.panelChildForm.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -222,5 +243,6 @@
 		private System.Windows.Forms.Label label8;
 		private System.Windows.Forms.Label label9;
 		private System.Windows.Forms.PictureBox pictureBoxConfiguration;
+		private System.Windows.Forms.PictureBox pictureBox2;
 	}
 }

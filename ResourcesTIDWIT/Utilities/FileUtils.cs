@@ -1,4 +1,6 @@
-﻿using ResourcesTIDWIT.Configuration;
+﻿using AzureCognitiveTranslator;
+using ResourcesTIDWIT.Configuration;
+using ResourcesTIDWIT.Views.Modules;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -16,6 +18,51 @@ namespace ResourcesTIDWIT.Utilities
 		public static event EventHandler<string> OperationFailed;
 
 		public static void InsertTranslationInFile(string filePath, string identifier, string translation)
+		{
+			try
+			{
+				ModifyFile(filePath, identifier, translation);
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
+
+		public static void SaveTranslationToFile(string language, string identifier, string translation)
+		{
+			string folderPath = ConfigurationManager.ReadSetting("PathFilesSharedJs");
+
+			if (string.IsNullOrEmpty(folderPath))
+			{
+				// If there is no route stored in the configuration, provide a default route or ask the user to select one
+				folderPath = @"C:\Development\TIDWIT60\C3\C3.MicroServices\C3.UI\C3.UI\src\js\i18n\lang";
+			}
+
+			string langFolderPath = Path.Combine(folderPath, language);
+			string filePath = Path.Combine(langFolderPath, "Shared.js");
+
+			if (!Directory.Exists(langFolderPath))
+			{
+				Directory.CreateDirectory(langFolderPath);
+			}
+
+			InsertTranslationInFile(filePath, identifier, translation);
+		}
+
+		public static void SortSharedJSFile(string filePath)
+		{
+			try
+			{
+				ModifyFile(filePath);
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
+
+		private static void ModifyFile(string filePath, string identifier = null, string translation = null)
 		{
 			// Read the contents of the file line by line.
 			string[] lines = File.ReadAllLines(filePath);
@@ -40,7 +87,7 @@ namespace ResourcesTIDWIT.Utilities
 
 			// Encontrar la línea de cierre del objeto "resx".
 			int resxEndLine = -1;
-			for (int i = resxStartLine + 1; i < lines.Length; i++)
+			for (int i = lines.Length - 1; i >= resxStartLine + 1; i--)
 			{
 				if (lines[i].Trim() == "},")
 				{
@@ -62,22 +109,25 @@ namespace ResourcesTIDWIT.Utilities
 				.Select(line => line.Trim())
 				.ToList();
 
-			// Check if the 'identifier' already exists in the properties.
-			if (propertyLines.Select(line => line.Trim()).Any(line => line.StartsWith($"{identifier}: ")))
+			if (identifier != null && translation != null)
 			{
-				MessageBox.Show($"The 'identifier' '{identifier}' already exists in the 'resx' object.");
-				OperationCompleted?.Invoke(null, $"The 'identifier' '{identifier}' already exists in the 'resx' object.\n");
-				return;
-			}
+				// Check if the 'identifier' already exists in the properties.
+				if (propertyLines.Select(line => line.Trim()).Any(line => line.StartsWith($"{identifier}: ")))
+				{
+					MessageBox.Show($"The 'identifier' '{identifier}' already exists in the 'resx' object.");
+					OperationCompleted?.Invoke(null, $"The 'identifier' '{identifier}' already exists in the 'resx' object.\n");
+					return;
+				}
 
-			// Insert the new line into the propertyLines collection.
-			int insertIndex = resxEndLine;
-			string newLine = $"{identifier}: \"{translation}\",\n";
-			propertyLines.Insert(insertIndex - resxStartLine - 1, newLine);
+				// Insert the new line into the propertyLines collection.
+				int insertIndex = resxEndLine;
+				string newLine = $"{identifier}: \"{translation}\",\n";
+				propertyLines.Insert(insertIndex - resxStartLine - 1, newLine);
+			}
 
 			// Concatenate all lines of the "resx" object.
 			string resxContent = string.Join("\n", propertyLines);
-			resxContent = resxContent.Replace("'", "\"");
+			resxContent = resxContent.Replace("'", "\"") + "\n";
 
 			// Use Split to split content into properties and values.
 			var propertyMatches =
@@ -103,6 +153,9 @@ namespace ResourcesTIDWIT.Utilities
 				.OrderBy(prop => prop.Key)
 				.Select(prop => $"{prop.Key}: \"{prop.Value}\"");
 
+			//validate duplicate keys
+			ValidateDuplicatedKeys(sortedProperties);
+
 			// Build the updated content of the "resx" object.
 			string sortedResxContent = string.Join(",\n", sortedProperties);
 
@@ -115,7 +168,7 @@ namespace ResourcesTIDWIT.Utilities
 					{
 						line = "    " + line;
 
-						if (line.Length > 100)
+						if (line.Length > 100) //TO-DO
 						{
 							int splitIndex = line.IndexOf(':'); // Find the position of the first ":"
 							if (splitIndex >= 0)
@@ -141,30 +194,40 @@ namespace ResourcesTIDWIT.Utilities
 			string finalText = string.Join(Environment.NewLine, lines);
 
 			OperationCompleted?.Invoke(null, "File Shared.js updated \n");
-
 		}
 
-		public static void SaveTranslationToFile(string language, string identifier, string translation)
+		private static void ValidateDuplicatedKeys(IEnumerable<string> propertyLines)
 		{
-			string folderPath = ConfigurationManager.ReadSetting("PathFilesSharedJs");
+			var keyDictionary = new Dictionary<string, int>();
+			var duplicateKeys = new List<string>();
 
-			if (string.IsNullOrEmpty(folderPath))
+			foreach (var line in propertyLines)
 			{
-				// If there is no route stored in the configuration, provide a default route or ask the user to select one
-				folderPath = @"C:\Development\TIDWIT60\C3\C3.MicroServices\C3.UI\C3.UI\src\js\i18n\lang";
+				if (line.Contains(":"))
+				{
+					var keyValuePair = line.Split(':');
+					var key = keyValuePair[0].Trim();
+					if (keyDictionary.ContainsKey(key))
+					{
+						if (!duplicateKeys.Contains(key))
+						{
+							duplicateKeys.Add(key);
+						}
+					}
+					else
+					{
+						keyDictionary[key] = 1;
+					}
+				}
 			}
 
-			string langFolderPath = Path.Combine(folderPath, language);
-			string filePath = Path.Combine(langFolderPath, "Shared.js");
-
-			if (!Directory.Exists(langFolderPath))
+			if (duplicateKeys.Any())
 			{
-				Directory.CreateDirectory(langFolderPath);
+				var errorMessage = "Duplicate keys found: " + string.Join(", ", duplicateKeys);
+				MessageBox.Show(errorMessage);
+				OperationCompleted?.Invoke(null, errorMessage + "\n");
+				return;
 			}
-
-			InsertTranslationInFile(filePath, identifier, translation);
 		}
-
-		// Other file-related functions
 	}
 }

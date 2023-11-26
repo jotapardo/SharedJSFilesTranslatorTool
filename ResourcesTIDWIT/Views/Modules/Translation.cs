@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using ResourcesTIDWIT.Configuration;
 using ResourcesTIDWIT.Utilities;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,13 @@ namespace ResourcesTIDWIT.Views.Modules
 			InitializeComponent();
 			// Subscribe to the OperationCompleted event in FileUtils
 			FileUtils.OperationCompleted += OnOperationCompleted;
+		}
+		private void OnOperationCompleted(object sender, string message)
+		{
+			// Show the message in ResultsRichTextBox
+			ResultsRichTextBox.AppendText($"{message}\n");
+			ResultsRichTextBox.SelectionStart = ResultsRichTextBox.Text.Length;
+			ResultsRichTextBox.ScrollToCaret();
 		}
 		private async void TranslateButton_Click(object sender, EventArgs e)
 		{
@@ -114,10 +122,9 @@ namespace ResourcesTIDWIT.Views.Modules
 				MessageBox.Show($"Translation failed. Error: {ex.Message}");
 			}
 		}
-		private void OnOperationCompleted(object sender, string message)
+		private void Translation_Load(object sender, EventArgs e)
 		{
-			// Show the message in ResultsRichTextBox
-			ResultsRichTextBox.AppendText($"{message}\n");
+			PathFilesSharedJs.Text = ConfigurationManager.ReadSetting("PathFilesSharedJs");
 		}
 	}
 }
