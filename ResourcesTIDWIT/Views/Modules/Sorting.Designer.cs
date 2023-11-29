@@ -1,4 +1,4 @@
-﻿namespace ResourcesTIDWIT.Views.Modules
+﻿namespace ResourcesSharedFiles.Views.Modules
 {
 	partial class Sorting
 	{

@@ -1,4 +1,4 @@
-﻿namespace ResourcesTIDWIT
+﻿namespace ResourcesSharedFiles
 {
 	partial class InputBoxForm
 	{

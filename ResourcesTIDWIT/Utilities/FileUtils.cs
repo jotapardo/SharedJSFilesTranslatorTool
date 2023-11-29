@@ -1,6 +1,6 @@
 ﻿using AzureCognitiveTranslator;
-using ResourcesTIDWIT.Configuration;
-using ResourcesTIDWIT.Views.Modules;
+using ResourcesSharedFiles.Configuration;
+using ResourcesSharedFiles.Views.Modules;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,7 +10,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace ResourcesTIDWIT.Utilities
+namespace ResourcesSharedFiles.Utilities
 {
 	public static class FileUtils
 	{

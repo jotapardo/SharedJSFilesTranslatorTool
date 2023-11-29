@@ -1,5 +1,5 @@
-﻿using ResourcesTIDWIT.Configuration;
-using ResourcesTIDWIT.Utilities;
+﻿using ResourcesSharedFiles.Configuration;
+using ResourcesSharedFiles.Utilities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using static AzureCognitiveTranslator.Translator;
 
-namespace ResourcesTIDWIT.Views.Modules
+namespace ResourcesSharedFiles.Views.Modules
 {
 	public partial class Sorting : Form
 	{

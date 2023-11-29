@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ResourcesTIDWIT.Utilities
+namespace ResourcesSharedFiles.Utilities
 {
 	public static class StringFormattingUtils
 	{

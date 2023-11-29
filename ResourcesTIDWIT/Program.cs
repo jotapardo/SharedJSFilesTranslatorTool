@@ -1,11 +1,11 @@
-﻿using ResourcesTIDWIT.Views;
+﻿using ResourcesSharedFiles.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace ResourcesTIDWIT
+namespace ResourcesSharedFiles
 {
 	internal static class Program
 	{

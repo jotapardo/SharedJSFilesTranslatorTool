@@ -7,7 +7,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ResourcesTIDWIT.Utilities
+namespace ResourcesSharedFiles.Utilities
 {
 	public static class TranslationUtils
 	{

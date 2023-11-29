@@ -1,4 +1,4 @@
-﻿namespace ResourcesTIDWIT.Views
+﻿namespace ResourcesSharedFiles.Views
 {
 	partial class Main
 	{

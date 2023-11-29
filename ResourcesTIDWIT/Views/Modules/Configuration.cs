@@ -9,10 +9,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.WindowsAPICodePack.Dialogs;
-using ResourcesTIDWIT.Configuration; // Make sure to add a reference to the Microsoft.WindowsAPICodePack NuGet package
+using ResourcesSharedFiles.Configuration; // Make sure to add a reference to the Microsoft.WindowsAPICodePack NuGet package
 
 
-namespace ResourcesTIDWIT.Views.Modules
+namespace ResourcesSharedFiles.Views.Modules
 {
 	public partial class Configuration : Form
 	{

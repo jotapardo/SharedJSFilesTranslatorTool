@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
-using ResourcesTIDWIT.Utilities;
-using ResourcesTIDWIT.Views.Modules;
+using ResourcesSharedFiles.Utilities;
+using ResourcesSharedFiles.Views.Modules;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -15,7 +15,7 @@ using System.Windows.Forms;
 using static AzureCognitiveTranslator.Translator;
 
 
-namespace ResourcesTIDWIT.Views
+namespace ResourcesSharedFiles.Views
 {
 	public partial class Main : Form
 	{

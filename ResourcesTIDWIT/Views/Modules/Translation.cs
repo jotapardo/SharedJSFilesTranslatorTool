@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
-using ResourcesTIDWIT.Configuration;
-using ResourcesTIDWIT.Utilities;
+using ResourcesSharedFiles.Configuration;
+using ResourcesSharedFiles.Utilities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,7 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace ResourcesTIDWIT.Views.Modules
+namespace ResourcesSharedFiles.Views.Modules
 {
 	public partial class Translation : Form
 	{
@@ -30,10 +30,10 @@ namespace ResourcesTIDWIT.Views.Modules
 		}
 		private async void TranslateButton_Click(object sender, EventArgs e)
 		{
-			string textToTranslate = TextBoxTextoOriginal.Text;
+			// Get selected languages
 			List<string> selectedLanguages = new List<string>();
 
-			// Obtener los idiomas seleccionados
+			
 			if (CheckBoxEN.Checked) selectedLanguages.Add("en");
 			if (CheckBoxES.Checked) selectedLanguages.Add("es");
 			if (CheckBoxPT.Checked) selectedLanguages.Add("pt");
@@ -54,77 +54,133 @@ namespace ResourcesTIDWIT.Views.Modules
 			}
 
 			ResultsRichTextBox.Clear();
+
 			ResultsRichTextBox.AppendText($"Starting translations for {selectedLanguages.Count} languages...,\n");
 
 			try
 			{
-				// Iterates through each selected language and saves the translation to the file
-				foreach (string targetLanguage in selectedLanguages)
+				//Iterates through each line (Original Text)
+				string[] lines = RichTextBoxOriginalText.Text.Split('\n');
+
+				for (int i = 0; i < lines.Length; i++)
 				{
-					ResultsRichTextBox.AppendText($"------------------- \n");
-					ResultsRichTextBox.AppendText($"Translating to '{targetLanguage}' \n");
+					string textToTranslate = lines[i].Trim();
 
-					// Guardar la traducción utilizando la función de FileUtils
-					string identifier = StringFormattingUtils.ConvertToPascalCase(textToTranslate);
-					string finalText = "";
-
-					if (targetLanguage != "en")
+					// Iterates through each selected language and saves the translation to the file
+					foreach (string targetLanguage in selectedLanguages)
 					{
-						// Traducir el texto utilizando la función de TranslationUtils
-						try
-						{
-							string translationResult = await TranslationUtils.Translate(textToTranslate, targetLanguage);
-							dynamic result = JsonConvert.DeserializeObject(translationResult);
+						ResultsRichTextBox.AppendText($"------------------- \n");
+						ResultsRichTextBox.AppendText($"Text to translate: '{textToTranslate}' \n");
+						ResultsRichTextBox.AppendText($"Translating to: '{targetLanguage}' \n");
 
-							finalText = result[0].translations[0].text;
-							//finalText = "test test test";
-						}
-						catch (Exception ex)
-						{
-							finalText = textToTranslate;
-							MessageBox.Show("Error in translation service. Desc:" + ex.Message);
-						}
+						// Save the translation using the FileUtils function
+						string identifier = dataGridViewTranslations.Rows[i].Cells[0].Value.ToString(); ;
 
-						bool containsValue = languagesToValidate.Contains(targetLanguage);
 
-						if (containsValue)
+						string finalText = "";
+
+						if (targetLanguage != "en")
 						{
-							using (var inputBox = new InputBoxForm())
+							// Translate the text using the Translation Utils function
+							try
 							{
-								//inputBox.EnteredValue = finalText;
-								inputBox.originalValue = finalText;
-								inputBox.languageSource = targetLanguage;
-								if (inputBox.ShowDialog() == DialogResult.OK)
+								string translationResult = await TranslationUtils.Translate(textToTranslate, targetLanguage);
+								dynamic result = JsonConvert.DeserializeObject(translationResult);
+
+								finalText = result[0].translations[0].text;
+								//finalText = "test test test";
+							}
+							catch (Exception ex)
+							{
+								finalText = textToTranslate;
+								MessageBox.Show("Error in translation service. Desc:" + ex.Message);
+							}
+
+							bool containsValue = languagesToValidate.Contains(targetLanguage);
+
+							if (containsValue)
+							{
+								using (var inputBox = new InputBoxForm())
 								{
-									string valorIngresado = inputBox.EnteredValue;
-									finalText = valorIngresado;
-									ResultsRichTextBox.AppendText($"New value: '{finalText}'\n");
+									//inputBox.EnteredValue = finalText;
+									inputBox.originalValue = finalText;
+									inputBox.languageSource = targetLanguage;
+									if (inputBox.ShowDialog() == DialogResult.OK)
+									{
+										string valorIngresado = inputBox.EnteredValue;
+										finalText = valorIngresado;
+										ResultsRichTextBox.AppendText($"New value: '{finalText}'\n");
+									}
 								}
 							}
+
 						}
+						else
+							finalText = textToTranslate;
+
+						ResultsRichTextBox.AppendText($"Translated text: '{finalText}' \n");
+						FileUtils.SaveTranslationToFile(targetLanguage, identifier, finalText);
 
 					}
-					else
-						finalText = textToTranslate;
 
-					FileUtils.SaveTranslationToFile(targetLanguage, identifier, finalText);
+					ResultsRichTextBox.AppendText("Done! \n");
 
-				}
+					// Show a success message or take other actions if necessary
+					MessageBox.Show("Translation completed and saved successfully!");
 
-				ResultsRichTextBox.AppendText("Done! \n");
+				}//end for (int i = 0; i < lines.Length; i++)
 
-				// Mostrar un mensaje de éxito o hacer otras acciones si es necesario
-				MessageBox.Show("Translation completed and saved successfully!");
+
+
 			}
 			catch (Exception ex)
 			{
-				// Manejar errores si la traducción falla
+				// Handle errors if translation fails
 				MessageBox.Show($"Translation failed. Error: {ex.Message}");
 			}
 		}
 		private void Translation_Load(object sender, EventArgs e)
 		{
 			PathFilesSharedJs.Text = ConfigurationManager.ReadSetting("PathFilesSharedJs");
+		}
+
+		private void RichTextBoxOriginalText_TextChanged(object sender, EventArgs e)
+		{
+			// Clear the DataGridView before adding new translations
+			dataGridViewTranslations.Rows.Clear();
+
+			// Separate text into lines
+			string[] lines = RichTextBoxOriginalText.Text.Split('\n');
+
+			// Add each line as a new translation to the DataGridView
+			foreach (string line in lines)
+			{
+				//Add row to DataGridView
+				dataGridViewTranslations.Rows.Add(StringFormattingUtils.ConvertToPascalCase(line)); // Generate key for translation
+			}
+
+			Color color1 = Color.LightGray; // Color de fondo para la línea par
+			Color color2 = Color.White;     // Color de fondo para la línea impar
+			
+			// Save current selection start to reset it later
+			int selectionStart = RichTextBoxOriginalText.SelectionStart;
+
+			int startIndex = 0;
+
+			// Applying background color to lines based on their index (odd/even)
+			for (int i = 0; i < lines.Length; i++)
+			{
+				int length = lines[i].Length;
+				RichTextBoxOriginalText.Select(startIndex, length);
+				RichTextBoxOriginalText.SelectionBackColor = i % 2 == 0 ? color1 : color2;
+
+				startIndex += length + 1; // +1 por el salto de línea
+			}
+			
+			// Return caret to the original position
+			RichTextBoxOriginalText.Select(selectionStart, 0);
+			RichTextBoxOriginalText.SelectionBackColor = RichTextBoxOriginalText.BackColor;
+
 		}
 	}
 }
