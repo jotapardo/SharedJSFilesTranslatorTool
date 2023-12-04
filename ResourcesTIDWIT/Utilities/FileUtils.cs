@@ -223,9 +223,9 @@ namespace ResourcesSharedFiles.Utilities
 
 			if (duplicateKeys.Any())
 			{
-				var errorMessage = "Duplicate keys found: " + string.Join(", ", duplicateKeys);
-				MessageBox.Show(errorMessage);
-				OperationCompleted?.Invoke(null, errorMessage + "\n");
+				var warningMessage = "Duplicate keys found: \n" + string.Join(", \n", duplicateKeys);
+				MessageBox.Show(warningMessage, "Duplicate keys found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+				OperationCompleted?.Invoke(null, warningMessage + "\n");
 				return;
 			}
 		}

@@ -49,7 +49,7 @@ namespace ResourcesSharedFiles.Views.Modules
 			// Check if at least one language is selected
 			if (selectedLanguages.Count == 0)
 			{
-				MessageBox.Show("Select at least one language for translation.");
+				MessageBox.Show("Select at least one language for translation", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 				return;
 			}
 
@@ -61,6 +61,12 @@ namespace ResourcesSharedFiles.Views.Modules
 			{
 				//Iterates through each line (Original Text)
 				string[] lines = RichTextBoxOriginalText.Text.Split('\n');
+
+				if (lines.Length == 0 || RichTextBoxOriginalText.Text == "")
+				{
+					MessageBox.Show("Enter a text for translation", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+					return;
+				}
 
 				for (int i = 0; i < lines.Length; i++)
 				{
@@ -74,7 +80,7 @@ namespace ResourcesSharedFiles.Views.Modules
 						ResultsRichTextBox.AppendText($"Translating to: '{targetLanguage}' \n");
 
 						// Save the translation using the FileUtils function
-						string identifier = dataGridViewTranslations.Rows[i].Cells[0].Value.ToString(); ;
+						string identifier = dataGridViewTranslations.Rows[i].Cells[0].Value.ToString();
 
 
 						string finalText = "";
@@ -85,9 +91,13 @@ namespace ResourcesSharedFiles.Views.Modules
 							try
 							{
 								string translationResult = await TranslationUtils.Translate(textToTranslate, targetLanguage);
-								dynamic result = JsonConvert.DeserializeObject(translationResult);
 
-								finalText = result[0].translations[0].text;
+								if (translationResult != null)
+								{
+									dynamic result = JsonConvert.DeserializeObject(translationResult);
+									finalText = result[0].translations[0].text;
+								}
+								
 								//finalText = "test test test";
 							}
 							catch (Exception ex)
@@ -126,7 +136,7 @@ namespace ResourcesSharedFiles.Views.Modules
 					ResultsRichTextBox.AppendText("Done! \n");
 
 					// Show a success message or take other actions if necessary
-					MessageBox.Show("Translation completed and saved successfully!");
+					MessageBox.Show("Translation completed and saved successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
 				}//end for (int i = 0; i < lines.Length; i++)
 

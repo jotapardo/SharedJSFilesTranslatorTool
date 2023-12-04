@@ -17,6 +17,7 @@ namespace ResourcesSharedFiles.Views.Modules
 	public partial class Configuration : Form
 	{
 		private string directoryPath = @"";
+		private string serviceTranslation = @"";
 
 		public Configuration()
 		{
@@ -65,7 +66,33 @@ namespace ResourcesSharedFiles.Views.Modules
 		private void Configuration_Load(object sender, EventArgs e)
 		{
 			directoryPath = ConfigurationManager.ReadSetting("PathFilesSharedJs");
+			serviceTranslation = ConfigurationManager.ReadSetting("ServiceTranlation");
+
 			PathFilesSharedJs.Text = directoryPath;
+
+			if (serviceTranslation == "Azure")
+			{
+				RadioButtonServicesTranlationAzure.Checked = true;
+				RadioButtonServicesTranlationGoogle.Checked = false;
+			}
+
+			if (serviceTranslation == "Google")
+			{
+				RadioButtonServicesTranlationAzure.Checked = false;
+				RadioButtonServicesTranlationGoogle.Checked = true;
+			}
+		}
+
+		private void RadioButtonServicesTranlationAzure_CheckedChanged(object sender, EventArgs e)
+		{
+			if(RadioButtonServicesTranlationAzure.Checked)
+				ConfigurationManager.WriteSetting("ServiceTranlation", "Azure");
+		}
+
+		private void RadioButtonServicesTranlationGoogle_CheckedChanged(object sender, EventArgs e)
+		{
+			if (RadioButtonServicesTranlationAzure.Checked)
+				ConfigurationManager.WriteSetting("ServiceTranlation", "Google");
 		}
 	}
 }
