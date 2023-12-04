@@ -17,11 +17,11 @@ namespace ResourcesSharedFiles.Utilities
 		public static event EventHandler<string> OperationCompleted;
 		public static event EventHandler<string> OperationFailed;
 
-		public static void InsertTranslationInFile(string filePath, string identifier, string translation)
+		public static void InsertTranslationInFile(string filePath, string identifier, string translation, string language)
 		{
 			try
 			{
-				ModifyFile(filePath, identifier, translation);
+				ModifyFile(filePath, identifier, translation, language);
 			}
 			catch (Exception ex)
 			{
@@ -47,14 +47,14 @@ namespace ResourcesSharedFiles.Utilities
 				Directory.CreateDirectory(langFolderPath);
 			}
 
-			InsertTranslationInFile(filePath, identifier, translation);
+			InsertTranslationInFile(filePath, identifier, translation, language);
 		}
 
-		public static void SortSharedJSFile(string filePath)
+		public static void SortSharedJSFile(string filePath, bool removeDuplicatesEnabled)
 		{
 			try
 			{
-				ModifyFile(filePath);
+				ModifyFile(filePath, null, null, "", removeDuplicatesEnabled);
 			}
 			catch (Exception ex)
 			{
@@ -62,7 +62,7 @@ namespace ResourcesSharedFiles.Utilities
 			}
 		}
 
-		private static void ModifyFile(string filePath, string identifier = null, string translation = null)
+		private static void ModifyFile(string filePath, string identifier = null, string translation = null, string language = "", bool removeDuplicatesEnabled = false)
 		{
 			// Read the contents of the file line by line.
 			string[] lines = File.ReadAllLines(filePath);
@@ -154,7 +154,10 @@ namespace ResourcesSharedFiles.Utilities
 				.Select(prop => $"{prop.Key}: \"{prop.Value}\"");
 
 			//validate duplicate keys
-			ValidateDuplicatedKeys(sortedProperties);
+			ValidateDuplicatedKeys(sortedProperties, language);
+
+			if (removeDuplicatesEnabled) 
+				sortedProperties = RemoveDuplicates(sortedProperties);
 
 			// Build the updated content of the "resx" object.
 			string sortedResxContent = string.Join(",\n", sortedProperties);
@@ -196,7 +199,7 @@ namespace ResourcesSharedFiles.Utilities
 			OperationCompleted?.Invoke(null, "File Shared.js updated \n");
 		}
 
-		private static void ValidateDuplicatedKeys(IEnumerable<string> propertyLines)
+		private static void ValidateDuplicatedKeys(IEnumerable<string> propertyLines, string language)
 		{
 			var keyDictionary = new Dictionary<string, int>();
 			var duplicateKeys = new List<string>();
@@ -223,11 +226,46 @@ namespace ResourcesSharedFiles.Utilities
 
 			if (duplicateKeys.Any())
 			{
-				var warningMessage = "Duplicate keys found: \n" + string.Join(", \n", duplicateKeys);
+				var warningMessage = $"Duplicate keys found in language '{language}': \n" + string.Join(", \n", duplicateKeys);
 				MessageBox.Show(warningMessage, "Duplicate keys found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 				OperationCompleted?.Invoke(null, warningMessage + "\n");
 				return;
 			}
+		}
+
+		private static IEnumerable<string> RemoveDuplicates(IEnumerable<string> propertyLines)
+		{
+			var keyDictionary = new Dictionary<string, int>();
+			var uniqueLines = new List<string>();
+			var removedDuplicates = new List<string>();
+
+			foreach (var line in propertyLines)
+			{
+				if (line.Contains(":"))
+				{
+					var keyValuePair = line.Split(':');
+					var key = keyValuePair[0].Trim();
+					if (!keyDictionary.ContainsKey(key))
+					{
+						keyDictionary[key] = 1;
+						uniqueLines.Add(line);
+					}
+					else
+					{
+						removedDuplicates.Add(line);
+					}
+				}
+			}
+
+			// Show a message with the removed duplicates
+			if (removedDuplicates.Any())
+			{
+				var message = "Duplicates removed: \n" + string.Join(", \n", removedDuplicates);
+				MessageBox.Show(message, "Duplicates Removed", MessageBoxButtons.OK, MessageBoxIcon.Information);
+				OperationCompleted?.Invoke(null, message + "\n");
+			}
+
+			return uniqueLines;
 		}
 	}
 }

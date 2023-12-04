@@ -96,7 +96,7 @@ namespace ResourcesSharedFiles.Views.Modules
 					{
 						OnOperationCompleted(null, $"--------------------------------------------------------.\n");
 						OnOperationCompleted(null,$"Sorting '{language.ToString()}' languaje.\n");
-						FileUtils.SortSharedJSFile(filePath);
+						FileUtils.SortSharedJSFile(filePath, CheckBoxRemoveDuplicates.Checked);
 					}
 					else
 					{
@@ -109,7 +109,7 @@ namespace ResourcesSharedFiles.Views.Modules
 				// Change button appearance after sorting
 				originalBackColor = SortButton.BackColor; // Store original color
 				SortButton.Text = "SORTED";
-				SortButton.BackColor = Color.DarkGray;
+				SortButton.BackColor = Color.Blue;
 
 				// Start a timer to revert the button appearance after 2 seconds
 				Timer timer = new Timer();

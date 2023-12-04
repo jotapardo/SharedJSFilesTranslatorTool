@@ -104,7 +104,7 @@ namespace ResourcesSharedFiles.Views.Modules
 						ResultsRichTextBox.AppendText($"Translating to: '{targetLanguage}' \n");
 
 						// Save the translation using the FileUtils function
-						string identifier = dataGridViewTranslations.Rows[i].Cells[0].Value.ToString();
+						string identifier = dataGridViewTranslations.Rows[i].Cells["TranslationKey"].Value.ToString();
 
 
 						string finalText = "";
@@ -196,6 +196,12 @@ namespace ResourcesSharedFiles.Views.Modules
 
 				if (!string.IsNullOrWhiteSpace(originalText))
 				{
+					// Trim the leading and trailing spaces from the original text
+					originalText = originalText.Trim();
+
+					// Update the "OriginalText" cell with the trimmed value
+					editedRow.Cells["OriginalText"].Value = originalText;
+
 					// Update the "TranslationKey" cell in the same row with the modified value
 					string translationKey = StringFormattingUtils.ConvertToPascalCase(originalText);
 					editedRow.Cells["TranslationKey"].Value = translationKey;
