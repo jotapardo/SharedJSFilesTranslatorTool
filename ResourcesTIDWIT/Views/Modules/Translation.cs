@@ -60,17 +60,41 @@ namespace ResourcesSharedFiles.Views.Modules
 			try
 			{
 				//Iterates through each line (Original Text)
-				string[] lines = RichTextBoxOriginalText.Text.Split('\n');
-
-				if (lines.Length == 0 || RichTextBoxOriginalText.Text == "")
+				// Check if dataGridViewTranslations is empty or doesn't contain the expected column
+				if (dataGridViewTranslations.Rows.Count == 0 || !dataGridViewTranslations.Columns.Contains("OriginalText"))
 				{
 					MessageBox.Show("Enter a text for translation", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 					return;
 				}
 
-				for (int i = 0; i < lines.Length; i++)
+				// Get texts from the "OriginalText" column
+				List<string> originalTexts = new List<string>();
+				foreach (DataGridViewRow row in dataGridViewTranslations.Rows)
 				{
-					string textToTranslate = lines[i].Trim();
+					if (!row.IsNewRow && row.Cells["OriginalText"].Value != null)
+					{
+						string originalText = row.Cells["OriginalText"].Value.ToString();
+						if (!string.IsNullOrWhiteSpace(originalText))
+						{
+							originalTexts.Add(originalText);
+						}
+
+						//Add row to DataGridView
+						//dataGridViewTranslations.Rows.Add(StringFormattingUtils.ConvertToPascalCase(line)); // Generate key for translation
+
+					}
+				}
+
+				// Check if there are texts for translation
+				if (originalTexts.Count == 0)
+				{
+					MessageBox.Show("Enter a text for translation", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+					return;
+				}
+
+				for (int i = 0; i < originalTexts.Count; i++)
+				{
+					string textToTranslate = originalTexts[i].Trim();
 
 					// Iterates through each selected language and saves the translation to the file
 					foreach (string targetLanguage in selectedLanguages)
@@ -138,9 +162,13 @@ namespace ResourcesSharedFiles.Views.Modules
 					// Show a success message or take other actions if necessary
 					MessageBox.Show("Translation completed and saved successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
+					if(CheckBoxCleanGrid.Checked)
+					{
+						// Clear the DataGridView after adding new translations
+						dataGridViewTranslations.Rows.Clear();
+					}
+
 				}//end for (int i = 0; i < lines.Length; i++)
-
-
 
 			}
 			catch (Exception ex)
@@ -154,43 +182,56 @@ namespace ResourcesSharedFiles.Views.Modules
 			PathFilesSharedJs.Text = ConfigurationManager.ReadSetting("PathFilesSharedJs");
 		}
 
-		private void RichTextBoxOriginalText_TextChanged(object sender, EventArgs e)
+		private void dataGridViewTranslations_CellEndEdit(object sender, DataGridViewCellEventArgs e)
 		{
-			// Clear the DataGridView before adding new translations
-			dataGridViewTranslations.Rows.Clear();
-
-			// Separate text into lines
-			string[] lines = RichTextBoxOriginalText.Text.Split('\n');
-
-			// Add each line as a new translation to the DataGridView
-			foreach (string line in lines)
+			// Check if the edited cell belongs to the "OriginalText" column
+			if (e.ColumnIndex == dataGridViewTranslations.Columns["OriginalText"].Index &&
+				e.RowIndex >= 0 && e.RowIndex < dataGridViewTranslations.Rows.Count)
 			{
-				//Add row to DataGridView
-				dataGridViewTranslations.Rows.Add(StringFormattingUtils.ConvertToPascalCase(line)); // Generate key for translation
+				DataGridViewRow editedRow = dataGridViewTranslations.Rows[e.RowIndex];
+				string originalText = editedRow.Cells["OriginalText"].Value?.ToString();
+
+				if (!string.IsNullOrWhiteSpace(originalText))
+				{
+					// Update the "TranslationKey" cell in the same row with the modified value
+					string translationKey = StringFormattingUtils.ConvertToPascalCase(originalText);
+					editedRow.Cells["TranslationKey"].Value = translationKey;
+				}
 			}
 
-			Color color1 = Color.LightGray; // Color de fondo para la línea par
-			Color color2 = Color.White;     // Color de fondo para la línea impar
-			
-			// Save current selection start to reset it later
-			int selectionStart = RichTextBoxOriginalText.SelectionStart;
-
-			int startIndex = 0;
-
-			// Applying background color to lines based on their index (odd/even)
-			for (int i = 0; i < lines.Length; i++)
+			if (e.ColumnIndex == dataGridViewTranslations.Columns["OriginalText"].Index ||
+				e.ColumnIndex == dataGridViewTranslations.Columns["TranslationKey"].Index)
 			{
-				int length = lines[i].Length;
-				RichTextBoxOriginalText.Select(startIndex, length);
-				RichTextBoxOriginalText.SelectionBackColor = i % 2 == 0 ? color1 : color2;
-
-				startIndex += length + 1; // +1 por el salto de línea
+				AreThereDuplicates();
 			}
-			
-			// Return caret to the original position
-			RichTextBoxOriginalText.Select(selectionStart, 0);
-			RichTextBoxOriginalText.SelectionBackColor = RichTextBoxOriginalText.BackColor;
+		}
 
+		private bool AreThereDuplicates()
+		{
+			HashSet<string> uniquePairs = new HashSet<string>();
+
+			for (int i = 0; i < dataGridViewTranslations.Rows.Count - 1; i++) // Exclude the new row placeholder
+			{
+				DataGridViewRow row = dataGridViewTranslations.Rows[i];
+
+				string originalText = row.Cells["OriginalText"].Value?.ToString();
+				string translationKey = row.Cells["TranslationKey"].Value?.ToString();
+
+				if (!string.IsNullOrEmpty(originalText) && !string.IsNullOrEmpty(translationKey))
+				{
+					string pair = $"{originalText}_{translationKey}";
+
+					if (uniquePairs.Contains(pair))
+					{
+						MessageBox.Show($"Duplicate pair found at row {i + 1}: OriginalText - '{originalText}', TranslationKey - '{translationKey}'.");
+						return true;
+					}
+
+					uniquePairs.Add(pair);
+				}
+			}
+
+			return false;
 		}
 	}
 }

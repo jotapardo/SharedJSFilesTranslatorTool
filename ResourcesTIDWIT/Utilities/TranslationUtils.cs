@@ -75,10 +75,6 @@ namespace ResourcesSharedFiles.Utilities
 				throw ex;
 			}
 
-
-
-
-
 		}
 	}
 }

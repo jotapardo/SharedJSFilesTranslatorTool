@@ -143,7 +143,7 @@
 			// label8
 			// 
 			this.label8.AutoSize = true;
-			this.label8.Location = new System.Drawing.Point(28, 585);
+			this.label8.Location = new System.Drawing.Point(28, 561);
 			this.label8.Name = "label8";
 			this.label8.Size = new System.Drawing.Size(100, 20);
 			this.label8.TabIndex = 53;
@@ -162,7 +162,7 @@
 			// 
 			this.pictureBoxConfig.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.pictureBoxConfig.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxConfig.Image")));
-			this.pictureBoxConfig.Location = new System.Drawing.Point(53, 532);
+			this.pictureBoxConfig.Location = new System.Drawing.Point(53, 508);
 			this.pictureBoxConfig.Name = "pictureBoxConfig";
 			this.pictureBoxConfig.Size = new System.Drawing.Size(50, 50);
 			this.pictureBoxConfig.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;

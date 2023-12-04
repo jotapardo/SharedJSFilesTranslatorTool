@@ -34,8 +34,8 @@
 			this.button1 = new System.Windows.Forms.Button();
 			this.btnChangeDirectory = new System.Windows.Forms.Button();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
-			this.RadioButtonServicesTranlationAzure = new System.Windows.Forms.RadioButton();
 			this.RadioButtonServicesTranlationGoogle = new System.Windows.Forms.RadioButton();
+			this.RadioButtonServicesTranlationAzure = new System.Windows.Forms.RadioButton();
 			this.groupBox1.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -115,6 +115,18 @@
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Service for translation:";
 			// 
+			// RadioButtonServicesTranlationGoogle
+			// 
+			this.RadioButtonServicesTranlationGoogle.AutoSize = true;
+			this.RadioButtonServicesTranlationGoogle.Enabled = false;
+			this.RadioButtonServicesTranlationGoogle.Location = new System.Drawing.Point(19, 63);
+			this.RadioButtonServicesTranlationGoogle.Name = "RadioButtonServicesTranlationGoogle";
+			this.RadioButtonServicesTranlationGoogle.Size = new System.Drawing.Size(317, 21);
+			this.RadioButtonServicesTranlationGoogle.TabIndex = 1;
+			this.RadioButtonServicesTranlationGoogle.Text = "Google Cloud Translation API (Not developed yet)";
+			this.RadioButtonServicesTranlationGoogle.UseVisualStyleBackColor = true;
+			this.RadioButtonServicesTranlationGoogle.CheckedChanged += new System.EventHandler(this.RadioButtonServicesTranlationGoogle_CheckedChanged);
+			// 
 			// RadioButtonServicesTranlationAzure
 			// 
 			this.RadioButtonServicesTranlationAzure.AutoSize = true;
@@ -127,17 +139,6 @@
 			this.RadioButtonServicesTranlationAzure.Text = "Azure Translator Tool API";
 			this.RadioButtonServicesTranlationAzure.UseVisualStyleBackColor = true;
 			this.RadioButtonServicesTranlationAzure.CheckedChanged += new System.EventHandler(this.RadioButtonServicesTranlationAzure_CheckedChanged);
-			// 
-			// RadioButtonServicesTranlationGoogle
-			// 
-			this.RadioButtonServicesTranlationGoogle.AutoSize = true;
-			this.RadioButtonServicesTranlationGoogle.Location = new System.Drawing.Point(19, 63);
-			this.RadioButtonServicesTranlationGoogle.Name = "RadioButtonServicesTranlationGoogle";
-			this.RadioButtonServicesTranlationGoogle.Size = new System.Drawing.Size(196, 21);
-			this.RadioButtonServicesTranlationGoogle.TabIndex = 1;
-			this.RadioButtonServicesTranlationGoogle.Text = "Google Cloud Translation API";
-			this.RadioButtonServicesTranlationGoogle.UseVisualStyleBackColor = true;
-			this.RadioButtonServicesTranlationGoogle.CheckedChanged += new System.EventHandler(this.RadioButtonServicesTranlationGoogle_CheckedChanged);
 			// 
 			// Configuration
 			// 
