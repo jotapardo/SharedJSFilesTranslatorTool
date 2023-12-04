@@ -164,8 +164,11 @@ namespace ResourcesSharedFiles.Views.Modules
 
 					if(CheckBoxCleanGrid.Checked)
 					{
-						// Clear the DataGridView after adding new translations
-						dataGridViewTranslations.Rows.Clear();
+						if (dataGridViewTranslations.Rows.Count > 0)
+						{
+							// Clear the DataGridView after adding new translations
+							dataGridViewTranslations.Rows.Clear();
+						}
 					}
 
 				}//end for (int i = 0; i < lines.Length; i++)

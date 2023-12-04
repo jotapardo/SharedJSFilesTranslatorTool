@@ -7,13 +7,14 @@ using System.Data;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static AzureCognitiveTranslator.Translator;
-
+using System.Reflection;
 
 namespace ResourcesSharedFiles.Views
 {
@@ -50,6 +51,8 @@ namespace ResourcesSharedFiles.Views
 			this.FormBorderStyle = FormBorderStyle.None;
 			Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, Width, Height, 10, 10));
 
+			lblVersion.Text = $"Version: {Assembly.GetEntryAssembly().GetName().Version.ToString()}"; 
+			
 		}
 
 		private void PboxClose_Click(object sender, EventArgs e)

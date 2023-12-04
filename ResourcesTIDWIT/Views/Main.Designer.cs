@@ -42,6 +42,7 @@
 			this.pictureBoxTranslation = new System.Windows.Forms.PictureBox();
 			this.panelChildForm = new System.Windows.Forms.Panel();
 			this.pictureBox2 = new System.Windows.Forms.PictureBox();
+			this.lblVersion = new System.Windows.Forms.Label();
 			this.panel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pboxClose)).BeginInit();
@@ -185,6 +186,7 @@
 			// panelChildForm
 			// 
 			this.panelChildForm.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(51)))), ((int)(((byte)(74)))));
+			this.panelChildForm.Controls.Add(this.lblVersion);
 			this.panelChildForm.Controls.Add(this.pictureBox2);
 			this.panelChildForm.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panelChildForm.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -203,6 +205,15 @@
 			this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
 			this.pictureBox2.TabIndex = 0;
 			this.pictureBox2.TabStop = false;
+			// 
+			// lblVersion
+			// 
+			this.lblVersion.AutoSize = true;
+			this.lblVersion.Location = new System.Drawing.Point(529, 589);
+			this.lblVersion.Name = "lblVersion";
+			this.lblVersion.Size = new System.Drawing.Size(104, 20);
+			this.lblVersion.TabIndex = 1;
+			this.lblVersion.Text = "Version: {1.0.0}";
 			// 
 			// Main
 			// 
@@ -225,6 +236,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxConfig)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxTranslation)).EndInit();
 			this.panelChildForm.ResumeLayout(false);
+			this.panelChildForm.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
 			this.ResumeLayout(false);
 
@@ -244,5 +256,6 @@
 		private System.Windows.Forms.Label label9;
 		private System.Windows.Forms.PictureBox pictureBoxConfiguration;
 		private System.Windows.Forms.PictureBox pictureBox2;
+		private System.Windows.Forms.Label lblVersion;
 	}
 }
