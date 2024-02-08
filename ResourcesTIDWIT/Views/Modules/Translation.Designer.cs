@@ -28,8 +28,12 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.components = new System.ComponentModel.Container();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.label6 = new System.Windows.Forms.Label();
 			this.label5 = new System.Windows.Forms.Label();
 			this.CheckBoxFRValidate = new System.Windows.Forms.CheckBox();
@@ -48,10 +52,16 @@
 			this.CheckBoxEN = new System.Windows.Forms.CheckBox();
 			this.CheckBoxES = new System.Windows.Forms.CheckBox();
 			this.dataGridViewTranslations = new System.Windows.Forms.DataGridView();
-			this.CheckBoxCleanGrid = new System.Windows.Forms.CheckBox();
 			this.OriginalText = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.TranslationKey = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.CheckBoxCleanGrid = new System.Windows.Forms.CheckBox();
+			this.dataGridViewResults = new System.Windows.Forms.DataGridView();
+			this.timer1 = new System.Windows.Forms.Timer(this.components);
+			this.labelMessage = new System.Windows.Forms.Label();
+			this.Key = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.copyTranslationKey = new System.Windows.Forms.DataGridViewButtonColumn();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridViewTranslations)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.dataGridViewResults)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// label6
@@ -59,7 +69,7 @@
 			this.label6.AutoSize = true;
 			this.label6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(58)))), ((int)(((byte)(79)))));
 			this.label6.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-			this.label6.Location = new System.Drawing.Point(12, 509);
+			this.label6.Location = new System.Drawing.Point(12, 471);
 			this.label6.Name = "label6";
 			this.label6.Padding = new System.Windows.Forms.Padding(6);
 			this.label6.Size = new System.Drawing.Size(67, 32);
@@ -70,7 +80,7 @@
 			// 
 			this.label5.AutoSize = true;
 			this.label5.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-			this.label5.Location = new System.Drawing.Point(12, 448);
+			this.label5.Location = new System.Drawing.Point(12, 320);
 			this.label5.Name = "label5";
 			this.label5.Size = new System.Drawing.Size(157, 20);
 			this.label5.TabIndex = 66;
@@ -143,7 +153,7 @@
 			// PathFilesSharedJs
 			// 
 			this.PathFilesSharedJs.Enabled = false;
-			this.PathFilesSharedJs.Location = new System.Drawing.Point(12, 471);
+			this.PathFilesSharedJs.Location = new System.Drawing.Point(12, 343);
 			this.PathFilesSharedJs.Name = "PathFilesSharedJs";
 			this.PathFilesSharedJs.ReadOnly = true;
 			this.PathFilesSharedJs.Size = new System.Drawing.Size(584, 27);
@@ -163,9 +173,9 @@
 			// 
 			// ResultsRichTextBox
 			// 
-			this.ResultsRichTextBox.Location = new System.Drawing.Point(85, 509);
+			this.ResultsRichTextBox.Location = new System.Drawing.Point(12, 509);
 			this.ResultsRichTextBox.Name = "ResultsRichTextBox";
-			this.ResultsRichTextBox.Size = new System.Drawing.Size(511, 101);
+			this.ResultsRichTextBox.Size = new System.Drawing.Size(336, 101);
 			this.ResultsRichTextBox.TabIndex = 57;
 			this.ResultsRichTextBox.Text = "";
 			// 
@@ -180,7 +190,7 @@
 			this.TranslateButton.Font = new System.Drawing.Font("AvantGarde Bk BT", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.TranslateButton.ForeColor = System.Drawing.Color.White;
 			this.TranslateButton.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-			this.TranslateButton.Location = new System.Drawing.Point(12, 337);
+			this.TranslateButton.Location = new System.Drawing.Point(12, 406);
 			this.TranslateButton.Name = "TranslateButton";
 			this.TranslateButton.Size = new System.Drawing.Size(584, 51);
 			this.TranslateButton.TabIndex = 56;
@@ -227,7 +237,7 @@
 			this.CheckBoxEN.Checked = true;
 			this.CheckBoxEN.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.CheckBoxEN.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-			this.CheckBoxEN.Location = new System.Drawing.Point(12, 244);
+			this.CheckBoxEN.Location = new System.Drawing.Point(16, 241);
 			this.CheckBoxEN.Name = "CheckBoxEN";
 			this.CheckBoxEN.Size = new System.Drawing.Size(47, 24);
 			this.CheckBoxEN.TabIndex = 52;
@@ -256,6 +266,14 @@
 			this.dataGridViewTranslations.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.OriginalText,
             this.TranslationKey});
+			dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
+			dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle3.ForeColor = System.Drawing.Color.White;
+			dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.dataGridViewTranslations.DefaultCellStyle = dataGridViewCellStyle3;
 			this.dataGridViewTranslations.GridColor = System.Drawing.SystemColors.ActiveCaption;
 			this.dataGridViewTranslations.Location = new System.Drawing.Point(16, 34);
 			this.dataGridViewTranslations.Name = "dataGridViewTranslations";
@@ -265,23 +283,11 @@
 			this.dataGridViewTranslations.TabIndex = 68;
 			this.dataGridViewTranslations.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewTranslations_CellEndEdit);
 			// 
-			// CheckBoxCleanGrid
-			// 
-			this.CheckBoxCleanGrid.AutoSize = true;
-			this.CheckBoxCleanGrid.Checked = true;
-			this.CheckBoxCleanGrid.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.CheckBoxCleanGrid.Location = new System.Drawing.Point(391, 394);
-			this.CheckBoxCleanGrid.Name = "CheckBoxCleanGrid";
-			this.CheckBoxCleanGrid.Size = new System.Drawing.Size(205, 24);
-			this.CheckBoxCleanGrid.TabIndex = 69;
-			this.CheckBoxCleanGrid.Text = "Clean grid after translation";
-			this.CheckBoxCleanGrid.UseVisualStyleBackColor = true;
-			// 
 			// OriginalText
 			// 
 			this.OriginalText.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-			dataGridViewCellStyle5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-			this.OriginalText.DefaultCellStyle = dataGridViewCellStyle5;
+			dataGridViewCellStyle1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+			this.OriginalText.DefaultCellStyle = dataGridViewCellStyle1;
 			this.OriginalText.HeaderText = "Original Text";
 			this.OriginalText.Name = "OriginalText";
 			this.OriginalText.Resizable = System.Windows.Forms.DataGridViewTriState.False;
@@ -290,12 +296,82 @@
 			// TranslationKey
 			// 
 			this.TranslationKey.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-			dataGridViewCellStyle6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-			this.TranslationKey.DefaultCellStyle = dataGridViewCellStyle6;
+			dataGridViewCellStyle2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+			this.TranslationKey.DefaultCellStyle = dataGridViewCellStyle2;
 			this.TranslationKey.HeaderText = "Translation Key";
 			this.TranslationKey.Name = "TranslationKey";
 			this.TranslationKey.Resizable = System.Windows.Forms.DataGridViewTriState.False;
 			this.TranslationKey.Width = 130;
+			// 
+			// CheckBoxCleanGrid
+			// 
+			this.CheckBoxCleanGrid.AutoSize = true;
+			this.CheckBoxCleanGrid.Checked = true;
+			this.CheckBoxCleanGrid.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.CheckBoxCleanGrid.Location = new System.Drawing.Point(12, 376);
+			this.CheckBoxCleanGrid.Name = "CheckBoxCleanGrid";
+			this.CheckBoxCleanGrid.Size = new System.Drawing.Size(205, 24);
+			this.CheckBoxCleanGrid.TabIndex = 69;
+			this.CheckBoxCleanGrid.Text = "Clean grid after translation";
+			this.CheckBoxCleanGrid.UseVisualStyleBackColor = true;
+			// 
+			// dataGridViewResults
+			// 
+			this.dataGridViewResults.AllowUserToAddRows = false;
+			this.dataGridViewResults.AllowUserToDeleteRows = false;
+			this.dataGridViewResults.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(51)))), ((int)(((byte)(74)))));
+			this.dataGridViewResults.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			this.dataGridViewResults.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Key,
+            this.copyTranslationKey});
+			dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
+			dataGridViewCellStyle5.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black;
+			dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+			this.dataGridViewResults.DefaultCellStyle = dataGridViewCellStyle5;
+			this.dataGridViewResults.Location = new System.Drawing.Point(369, 509);
+			this.dataGridViewResults.Name = "dataGridViewResults";
+			this.dataGridViewResults.ReadOnly = true;
+			this.dataGridViewResults.RowTemplate.DefaultCellStyle.ForeColor = System.Drawing.Color.Black;
+			this.dataGridViewResults.ShowEditingIcon = false;
+			this.dataGridViewResults.Size = new System.Drawing.Size(227, 113);
+			this.dataGridViewResults.TabIndex = 70;
+			this.dataGridViewResults.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewResults_CellContentClick);
+			// 
+			// timer1
+			// 
+			this.timer1.Interval = 2000;
+			this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+			// 
+			// labelMessage
+			// 
+			this.labelMessage.AutoSize = true;
+			this.labelMessage.Location = new System.Drawing.Point(365, 483);
+			this.labelMessage.Name = "labelMessage";
+			this.labelMessage.Size = new System.Drawing.Size(0, 20);
+			this.labelMessage.TabIndex = 71;
+			// 
+			// Key
+			// 
+			this.Key.HeaderText = "TranslationKey";
+			this.Key.Name = "Key";
+			this.Key.ReadOnly = true;
+			this.Key.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+			this.Key.Width = 120;
+			// 
+			// copyTranslationKey
+			// 
+			dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+			dataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black;
+			this.copyTranslationKey.DefaultCellStyle = dataGridViewCellStyle4;
+			this.copyTranslationKey.HeaderText = "Copy";
+			this.copyTranslationKey.Name = "copyTranslationKey";
+			this.copyTranslationKey.ReadOnly = true;
+			this.copyTranslationKey.Text = "Copy";
+			this.copyTranslationKey.Width = 50;
 			// 
 			// Translation
 			// 
@@ -303,6 +379,8 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(51)))), ((int)(((byte)(74)))));
 			this.ClientSize = new System.Drawing.Size(610, 640);
+			this.Controls.Add(this.labelMessage);
+			this.Controls.Add(this.dataGridViewResults);
 			this.Controls.Add(this.CheckBoxCleanGrid);
 			this.Controls.Add(this.dataGridViewTranslations);
 			this.Controls.Add(this.label6);
@@ -330,6 +408,7 @@
 			this.Text = "Translation";
 			this.Load += new System.EventHandler(this.Translation_Load);
 			((System.ComponentModel.ISupportInitialize)(this.dataGridViewTranslations)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.dataGridViewResults)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -358,5 +437,10 @@
 		private System.Windows.Forms.DataGridViewTextBoxColumn OriginalText;
 		private System.Windows.Forms.DataGridViewTextBoxColumn TranslationKey;
 		private System.Windows.Forms.CheckBox CheckBoxCleanGrid;
+		private System.Windows.Forms.DataGridView dataGridViewResults;
+		private System.Windows.Forms.Timer timer1;
+		private System.Windows.Forms.Label labelMessage;
+		private System.Windows.Forms.DataGridViewTextBoxColumn Key;
+		private System.Windows.Forms.DataGridViewButtonColumn copyTranslationKey;
 	}
 }

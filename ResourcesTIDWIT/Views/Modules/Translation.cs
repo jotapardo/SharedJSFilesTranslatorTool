@@ -155,23 +155,27 @@ namespace ResourcesSharedFiles.Views.Modules
 						ResultsRichTextBox.AppendText($"Translated text: '{finalText}' \n");
 						FileUtils.SaveTranslationToFile(targetLanguage, identifier, finalText);
 
+						dataGridViewResults.Rows.Add(identifier);
+
 					}
 
 					ResultsRichTextBox.AppendText("Done! \n");
 
-					// Show a success message or take other actions if necessary
-					MessageBox.Show("Translation completed and saved successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-					if(CheckBoxCleanGrid.Checked)
-					{
-						if (dataGridViewTranslations.Rows.Count > 0)
-						{
-							// Clear the DataGridView after adding new translations
-							dataGridViewTranslations.Rows.Clear();
-						}
-					}
+					
 
 				}//end for (int i = 0; i < lines.Length; i++)
+
+				// Show a success message or take other actions if necessary
+				MessageBox.Show("Translation completed and saved successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+				if (CheckBoxCleanGrid.Checked)
+				{
+					if (dataGridViewTranslations.Rows.Count > 0)
+					{
+						// Clear the DataGridView after adding new translations
+						dataGridViewTranslations.Rows.Clear();
+					}
+				}
 
 			}
 			catch (Exception ex)
@@ -187,31 +191,43 @@ namespace ResourcesSharedFiles.Views.Modules
 
 		private void dataGridViewTranslations_CellEndEdit(object sender, DataGridViewCellEventArgs e)
 		{
-			// Check if the edited cell belongs to the "OriginalText" column
-			if (e.ColumnIndex == dataGridViewTranslations.Columns["OriginalText"].Index &&
-				e.RowIndex >= 0 && e.RowIndex < dataGridViewTranslations.Rows.Count)
+			try
 			{
-				DataGridViewRow editedRow = dataGridViewTranslations.Rows[e.RowIndex];
-				string originalText = editedRow.Cells["OriginalText"].Value?.ToString();
-
-				if (!string.IsNullOrWhiteSpace(originalText))
+				// Check if the edited cell belongs to the "OriginalText" column
+				if (e.ColumnIndex == dataGridViewTranslations.Columns["OriginalText"].Index &&
+					e.RowIndex >= 0 && e.RowIndex < dataGridViewTranslations.Rows.Count)
 				{
-					// Trim the leading and trailing spaces from the original text
-					originalText = originalText.Trim();
+					DataGridViewRow editedRow = dataGridViewTranslations.Rows[e.RowIndex];
+					string originalText = editedRow.Cells["OriginalText"].Value?.ToString();
 
-					// Update the "OriginalText" cell with the trimmed value
-					editedRow.Cells["OriginalText"].Value = originalText;
+					if (!string.IsNullOrWhiteSpace(originalText))
+					{
+						// Trim the leading and trailing spaces from the original text
+						originalText = originalText.Trim();
 
-					// Update the "TranslationKey" cell in the same row with the modified value
-					string translationKey = StringFormattingUtils.ConvertToPascalCase(originalText);
-					editedRow.Cells["TranslationKey"].Value = translationKey;
+						// Update the "OriginalText" cell with the trimmed value
+						editedRow.Cells["OriginalText"].Value = originalText;
+
+
+						if (string.IsNullOrEmpty((string)editedRow.Cells["TranslationKey"].Value))
+						{
+							// Update the "TranslationKey" cell in the same row with the modified value
+							string translationKey = StringFormattingUtils.ConvertToPascalCase(originalText);
+							editedRow.Cells["TranslationKey"].Value = translationKey;
+						}
+
+					}
+				}
+
+				if (e.ColumnIndex == dataGridViewTranslations.Columns["OriginalText"].Index ||
+					e.ColumnIndex == dataGridViewTranslations.Columns["TranslationKey"].Index)
+				{
+					AreThereDuplicates();
 				}
 			}
-
-			if (e.ColumnIndex == dataGridViewTranslations.Columns["OriginalText"].Index ||
-				e.ColumnIndex == dataGridViewTranslations.Columns["TranslationKey"].Index)
-			{
-				AreThereDuplicates();
+			catch(Exception  ex) {
+				// Handle errors if translation fails
+				MessageBox.Show($"Error on edit cell: {ex.Message}");
 			}
 		}
 
@@ -241,6 +257,44 @@ namespace ResourcesSharedFiles.Views.Modules
 			}
 
 			return false;
+		}
+
+		private void dataGridViewResults_CellContentClick(object sender, DataGridViewCellEventArgs e)
+		{
+			try
+			{
+				// Check if the click event occurred in the button column
+				if (e.ColumnIndex == dataGridViewResults.Columns["copyTranslationKey"].Index && e.RowIndex >= 0)
+				{
+					// Get the value of the cell in the Key column
+					string translationKey = dataGridViewResults.Rows[e.RowIndex].Cells["Key"].Value?.ToString();
+
+					// Copy the value to the clipboard
+					Clipboard.SetText(translationKey);
+
+					// Show a message indicating text copied to the clipboard
+					labelMessage.Text = $"Text '{translationKey}' copied to clipboard";
+
+					// Start a timer to hide the message after 1 second
+					timer1.Start();
+				}
+			}
+			catch (Exception ex)
+			{
+				// Handle errors if translation fails
+				MessageBox.Show($"Error on copy: {ex.Message}");
+			}
+
+
+		}
+
+		private void timer1_Tick(object sender, EventArgs e)
+		{
+			// Stop the timer
+			timer1.Stop();
+
+			// Clear the message in the label
+			labelMessage.Text = "";
 		}
 	}
 }
