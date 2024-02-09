@@ -32,7 +32,6 @@
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.label6 = new System.Windows.Forms.Label();
 			this.label5 = new System.Windows.Forms.Label();
@@ -56,10 +55,10 @@
 			this.TranslationKey = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.CheckBoxCleanGrid = new System.Windows.Forms.CheckBox();
 			this.dataGridViewResults = new System.Windows.Forms.DataGridView();
-			this.timer1 = new System.Windows.Forms.Timer(this.components);
-			this.labelMessage = new System.Windows.Forms.Label();
 			this.Key = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.copyTranslationKey = new System.Windows.Forms.DataGridViewButtonColumn();
+			this.timer1 = new System.Windows.Forms.Timer(this.components);
+			this.labelMessage = new System.Windows.Forms.Label();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridViewTranslations)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridViewResults)).BeginInit();
 			this.SuspendLayout();
@@ -324,14 +323,6 @@
 			this.dataGridViewResults.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Key,
             this.copyTranslationKey});
-			dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
-			dataGridViewCellStyle5.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			dataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black;
-			dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-			this.dataGridViewResults.DefaultCellStyle = dataGridViewCellStyle5;
 			this.dataGridViewResults.Location = new System.Drawing.Point(369, 509);
 			this.dataGridViewResults.Name = "dataGridViewResults";
 			this.dataGridViewResults.ReadOnly = true;
@@ -340,19 +331,6 @@
 			this.dataGridViewResults.Size = new System.Drawing.Size(227, 113);
 			this.dataGridViewResults.TabIndex = 70;
 			this.dataGridViewResults.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewResults_CellContentClick);
-			// 
-			// timer1
-			// 
-			this.timer1.Interval = 2000;
-			this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-			// 
-			// labelMessage
-			// 
-			this.labelMessage.AutoSize = true;
-			this.labelMessage.Location = new System.Drawing.Point(365, 483);
-			this.labelMessage.Name = "labelMessage";
-			this.labelMessage.Size = new System.Drawing.Size(0, 20);
-			this.labelMessage.TabIndex = 71;
 			// 
 			// Key
 			// 
@@ -372,6 +350,19 @@
 			this.copyTranslationKey.ReadOnly = true;
 			this.copyTranslationKey.Text = "Copy";
 			this.copyTranslationKey.Width = 50;
+			// 
+			// timer1
+			// 
+			this.timer1.Interval = 2000;
+			this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+			// 
+			// labelMessage
+			// 
+			this.labelMessage.AutoSize = true;
+			this.labelMessage.Location = new System.Drawing.Point(365, 483);
+			this.labelMessage.Name = "labelMessage";
+			this.labelMessage.Size = new System.Drawing.Size(0, 20);
+			this.labelMessage.TabIndex = 71;
 			// 
 			// Translation
 			// 

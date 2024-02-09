@@ -95,6 +95,7 @@ namespace ResourcesSharedFiles.Views.Modules
 				for (int i = 0; i < originalTexts.Count; i++)
 				{
 					string textToTranslate = originalTexts[i].Trim();
+					string identifier = string.Empty;
 
 					// Iterates through each selected language and saves the translation to the file
 					foreach (string targetLanguage in selectedLanguages)
@@ -104,7 +105,7 @@ namespace ResourcesSharedFiles.Views.Modules
 						ResultsRichTextBox.AppendText($"Translating to: '{targetLanguage}' \n");
 
 						// Save the translation using the FileUtils function
-						string identifier = dataGridViewTranslations.Rows[i].Cells["TranslationKey"].Value.ToString();
+						identifier = dataGridViewTranslations.Rows[i].Cells["TranslationKey"].Value.ToString();
 
 
 						string finalText = "";
@@ -155,10 +156,11 @@ namespace ResourcesSharedFiles.Views.Modules
 						ResultsRichTextBox.AppendText($"Translated text: '{finalText}' \n");
 						FileUtils.SaveTranslationToFile(targetLanguage, identifier, finalText);
 
-						dataGridViewResults.Rows.Add(identifier);
+						
 
 					}
 
+					dataGridViewResults.Rows.Add(identifier);
 					ResultsRichTextBox.AppendText("Done! \n");
 
 					
@@ -212,7 +214,7 @@ namespace ResourcesSharedFiles.Views.Modules
 						if (string.IsNullOrEmpty((string)editedRow.Cells["TranslationKey"].Value))
 						{
 							// Update the "TranslationKey" cell in the same row with the modified value
-							string translationKey = StringFormattingUtils.ConvertToPascalCase(originalText);
+							string translationKey = StringFormattingUtils.ConvertToKey(originalText);
 							editedRow.Cells["TranslationKey"].Value = translationKey;
 						}
 
@@ -296,5 +298,6 @@ namespace ResourcesSharedFiles.Views.Modules
 			// Clear the message in the label
 			labelMessage.Text = "";
 		}
+
 	}
 }
