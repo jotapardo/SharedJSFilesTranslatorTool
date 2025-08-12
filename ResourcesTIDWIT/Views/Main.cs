@@ -1,20 +1,21 @@
-﻿using Newtonsoft.Json;
-using ResourcesSharedFiles.Utilities;
-using ResourcesSharedFiles.Views.Modules;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Deployment.Application;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Reflection;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Newtonsoft.Json;
+using ResourcesSharedFiles.Utilities;
+using ResourcesSharedFiles.Views.Modules;
 using static AzureCognitiveTranslator.Translator;
-using System.Reflection;
 
 namespace ResourcesSharedFiles.Views
 {
@@ -51,8 +52,15 @@ namespace ResourcesSharedFiles.Views
 			this.FormBorderStyle = FormBorderStyle.None;
 			Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, Width, Height, 10, 10));
 
-			lblVersion.Text = $"Version: {Assembly.GetEntryAssembly().GetName().Version.ToString()}"; 
-			
+			if (ApplicationDeployment.IsNetworkDeployed)
+			{
+				lblVersion.Text = $"Version: {ApplicationDeployment.CurrentDeployment.CurrentVersion}";
+			}
+			else
+			{
+				lblVersion.Text = $"Version: {Assembly.GetExecutingAssembly().GetName().Version}";
+			}
+
 		}
 
 		private void PboxClose_Click(object sender, EventArgs e)

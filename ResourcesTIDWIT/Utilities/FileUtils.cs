@@ -235,7 +235,7 @@ namespace ResourcesSharedFiles.Utilities
 
 		private static IEnumerable<string> RemoveDuplicates(IEnumerable<string> propertyLines)
 		{
-			var keyDictionary = new Dictionary<string, int>();
+			var keyDictionary = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
 			var uniqueLines = new List<string>();
 			var removedDuplicates = new List<string>();
 
@@ -245,6 +245,8 @@ namespace ResourcesSharedFiles.Utilities
 				{
 					var keyValuePair = line.Split(':');
 					var key = keyValuePair[0].Trim();
+
+					//case-insensitive comparison because of the use of StringComparer.OrdinalIgnoreCase
 					if (!keyDictionary.ContainsKey(key))
 					{
 						keyDictionary[key] = 1;
